@@ -15,8 +15,8 @@ const authService = {
     }
   },
   generateToken: async (user) => {
-    const { id, displayName, email } = user;
-    const token = jwt.sign({ id, displayName, email }, process.env.JWT_SECRET);
+    const { id, displayName, email, image } = user;
+    const token = jwt.sign({ id, displayName, email, image }, process.env.JWT_SECRET);
     return token;
   },
 };
