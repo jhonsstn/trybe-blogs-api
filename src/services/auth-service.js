@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const { BadRequestError } = require('../errors');
 
 const authService = {
@@ -12,6 +13,11 @@ const authService = {
     if (loginPassword.toString() !== userPassword.toString()) {
       throw new BadRequestError('Invalid password');
     }
+  },
+  generateToken: async (user) => {
+    const { id, displayName, email } = user;
+    const token = jwt.sign({ id, displayName, email }, process.env.JWT_SECRET);
+    return token;
   },
 };
 
