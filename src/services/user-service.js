@@ -32,7 +32,7 @@ const LoginService = {
       where: {
         email,
       },
-    }, { raw: true });
+    });
     if (exists) throw new ConflictError('User already registered');
     const newUser = await User.create(user);
     return newUser;
