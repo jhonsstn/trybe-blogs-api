@@ -1,9 +1,5 @@
-class BadRequestError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'BadRequestError';
-    this.status = 400;
-  }
-}
+const BadRequestError = require('./bad-request-error');
 
-module.exports = { BadRequestError };
+module.exports = {
+  BadRequestError,
+};
