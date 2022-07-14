@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { BadRequestError } = require('../errors');
+const { BadRequestError, UnauthorizedError } = require('../errors');
 
 const authService = {
   validateLoginData: async (data) => {
@@ -18,6 +18,15 @@ const authService = {
     const { id, displayName, email, image } = user;
     const token = jwt.sign({ id, displayName, email, image }, process.env.JWT_SECRET);
     return token;
+  },
+  validateToken: async (token) => {
+    if (!token) throw new UnauthorizedError('Token not found');
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      return decoded;
+    } catch (error) {
+      throw new UnauthorizedError('Expired or invalid token');
+    }
   },
 };
 
