@@ -37,6 +37,10 @@ const LoginService = {
     const newUser = await User.create(user);
     return newUser;
   },
+  getAllUsers: async () => {
+    const users = await User.findAll({ raw: true, attributes: { exclude: ['password'] } });
+    return users;
+  },
 };
 
 module.exports = LoginService;
