@@ -8,6 +8,11 @@ const authService = {
     }
     return data;
   },
+  validateUserPassword: async (loginPassword, userPassword) => {
+    if (loginPassword.toString() !== userPassword.toString()) {
+      throw new BadRequestError('Invalid password');
+    }
+  },
 };
 
 module.exports = authService;
