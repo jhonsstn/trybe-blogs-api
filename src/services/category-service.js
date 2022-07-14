@@ -10,6 +10,10 @@ const CategoryService = {
     const newCategory = await Category.create(category);
     return newCategory;
   },
+  getAllCategories: async () => {
+    const categories = await Category.findAll({ raw: true });
+    return categories;
+  },
 };
 
 module.exports = CategoryService;
