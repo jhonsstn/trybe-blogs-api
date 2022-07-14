@@ -1,6 +1,6 @@
 const express = require('express');
 const errorHandlerMiddleware = require('./middleware/error-handler-middleware');
-const { loginRoute, userRoutes, categoryRoutes } = require('./routes');
+const { loginRoute, userRoutes, categoryRoutes, postRoutes } = require('./routes');
 
 const app = express();
 
@@ -9,6 +9,7 @@ app.use(express.json());
 app.use('/login', loginRoute);
 app.use('/user', userRoutes);
 app.use('/categories', categoryRoutes);
+app.use('/post', postRoutes);
 
 app.use(errorHandlerMiddleware);
 
