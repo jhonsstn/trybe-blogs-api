@@ -1,6 +1,6 @@
 const express = require('express');
 const errorHandlerMiddleware = require('./middleware/error-handler-middleware');
-const loginRoute = require('./routes/login-route');
+const { loginRoute } = require('./routes');
 
 const app = express();
 
