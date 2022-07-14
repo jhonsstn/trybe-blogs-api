@@ -1,6 +1,6 @@
 const validator = require('validator');
 const { User } = require('../database/models');
-const { BadRequestError, ConflictError } = require('../errors');
+const { BadRequestError, ConflictError, NotFoundError } = require('../errors');
 
 const LoginService = {
   getUserByEmail: async (email) => {
@@ -40,6 +40,19 @@ const LoginService = {
   getAllUsers: async () => {
     const users = await User.findAll({ raw: true, attributes: { exclude: ['password'] } });
     return users;
+  },
+  getUserById: async (id) => {
+    const user = await User.findOne({
+      where: {
+        id,
+      },
+      raw: true,
+      attributes: { exclude: ['password'] },
+    });
+    if (!user) {
+      throw new NotFoundError('User does not exist');
+    }
+    return user;
   },
 };
 
