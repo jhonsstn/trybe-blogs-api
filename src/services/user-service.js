@@ -1,4 +1,5 @@
 const { User } = require('../database/models');
+const { BadRequestError } = require('../errors');
 
 const LoginService = {
   getUserByEmail: async (email) => {
@@ -6,7 +7,10 @@ const LoginService = {
       where: {
         email,
       },
-    });
+    }, { raw: true });
+    if (!user) {
+      throw new BadRequestError('Invalid fields');
+    }
     return user;
   },
 
