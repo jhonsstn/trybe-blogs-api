@@ -14,6 +14,10 @@ const CategoryService = {
     const categories = await Category.findAll({ raw: true });
     return categories;
   },
+  categoryExists: async (categoryId) => {
+    const category = await Category.findByPk(categoryId);
+    if (!category) throw new BadRequestError('"categoryIds" not found');
+  },
 };
 
 module.exports = CategoryService;
