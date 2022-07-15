@@ -40,7 +40,8 @@ module.exports = (sequelize) => {
   });
   BlogPost.associate = function (models) {
     BlogPost.belongsTo(models.User, {
-      foreignKey: 'id'
+      foreignKey: 'id',
+      as: 'user',
     });
   }
   return BlogPost;
