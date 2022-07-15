@@ -54,6 +54,11 @@ const LoginService = {
     }
     return user;
   },
+  deleteMe: async (id) => {
+    const user = await User.findByPk(id);
+    if (!user) throw new NotFoundError('User does not exist');
+    await user.destroy();
+  },
 };
 
 module.exports = LoginService;
