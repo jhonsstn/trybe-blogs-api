@@ -52,6 +52,12 @@ const BlogPostService = {
     await post.update(postData, { where: { id } });
     return post;
   },
+  deleteBlogPostById: async (id, userId) => {
+    const post = await BlogPost.findByPk(id);
+    if (!post) throw new NotFoundError('Post does not exist');
+    if (post.userId !== userId) throw new UnauthorizedError('Unauthorized user');
+    await post.destroy();
+  },
 };
 
 module.exports = BlogPostService;
