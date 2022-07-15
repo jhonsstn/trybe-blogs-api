@@ -11,7 +11,7 @@ const CategoryService = {
     return newCategory;
   },
   getAllCategories: async () => {
-    const categories = await Category.findAll({ raw: true });
+    const categories = await Category.findAll();
     return categories;
   },
   categoryExists: async (categoryId) => {

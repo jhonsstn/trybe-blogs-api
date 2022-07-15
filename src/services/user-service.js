@@ -8,10 +8,8 @@ const LoginService = {
       where: {
         email,
       },
-    }, { raw: true });
-    if (!user) {
-      throw new BadRequestError('Invalid fields');
-    }
+    });
+    if (!user) throw new BadRequestError('Invalid fields');
     return user;
   },
   validateUserData: async (user) => {
@@ -38,7 +36,7 @@ const LoginService = {
     return newUser;
   },
   getAllUsers: async () => {
-    const users = await User.findAll({ raw: true, attributes: { exclude: ['password'] } });
+    const users = await User.findAll({ attributes: { exclude: ['password'] } });
     return users;
   },
   getUserById: async (id) => {
@@ -46,7 +44,6 @@ const LoginService = {
       where: {
         id,
       },
-      raw: true,
       attributes: { exclude: ['password'] },
     });
     if (!user) {
