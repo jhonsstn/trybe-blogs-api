@@ -1,5 +1,5 @@
 const { sequelize } = require('../database/models');
-const { BlogPost, PostCategory } = require('../database/models');
+const { BlogPost, PostCategory, User, Category } = require('../database/models');
 const { BadRequestError } = require('../errors');
 
 const BlogPostService = {
@@ -20,6 +20,16 @@ const BlogPostService = {
     const { title, content } = blogPost;
     console.log(title);
     if (!title || !content) throw new BadRequestError('Some required fields are missing');
+  },
+  getAllBlogPosts: async () => {
+    const BlogPosts = await BlogPost.findAll({
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+    console.log(BlogPosts);
+    return BlogPosts;
   },
 };
 
