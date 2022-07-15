@@ -6,10 +6,12 @@ const {
   getBlogPostById,
   updateBlogPostById,
   deleteBlogPostById,
+  getAllBlogPostsByTerm,
 } = require('../controllers/blog-post-controller');
 
 const route = Router();
 
+route.get('/search', rescue(getAllBlogPostsByTerm));
 route.post('/', rescue(createBlogPost));
 route.get('/', rescue(getAllBlogPosts));
 route.get('/:id', rescue(getBlogPostById));
