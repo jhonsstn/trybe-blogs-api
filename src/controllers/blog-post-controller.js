@@ -5,6 +5,7 @@ const {
   getBlogPostById,
   updateBlogPostById,
   deleteBlogPostById,
+  getAllBlogPostsByTerm,
 } = require('../services/blog-post-service');
 const { validateToken } = require('../services/auth-service');
 const { categoryExists } = require('../services/category-service');
@@ -40,6 +41,12 @@ const BlogPostController = {
     const { id } = req.params;
     await deleteBlogPostById(id, userId);
     res.sendStatus(204);
+  },
+  getAllBlogPostsByTerm: async (req, res) => {
+    await validateToken(req.headers.authorization);
+    const { q: term } = req.query;
+    const posts = await getAllBlogPostsByTerm(term);
+    res.status(200).json(posts);
   },
 };
 
