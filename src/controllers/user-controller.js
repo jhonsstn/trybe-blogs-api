@@ -4,6 +4,7 @@ const {
   validateUserData,
   getAllUsers,
   getUserById,
+  deleteMe,
 } = require('../services/user-service');
 
 const UserController = {
@@ -22,6 +23,11 @@ const UserController = {
     await validateToken(req.headers.authorization);
     const user = await getUserById(req.params.id);
     res.status(200).json(user);
+  },
+  deleteMe: async (req, res) => {
+    const { id } = await validateToken(req.headers.authorization);
+    await deleteMe(id);
+    res.sendStatus(204);
   },
 };
 
