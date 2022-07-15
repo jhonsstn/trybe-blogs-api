@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { sequelize } = require('../database/models');
 const { BlogPost, PostCategory, User, Category } = require('../database/models');
 const { BadRequestError, NotFoundError, UnauthorizedError } = require('../errors');
@@ -57,6 +58,18 @@ const BlogPostService = {
     if (!post) throw new NotFoundError('Post does not exist');
     if (post.userId !== userId) throw new UnauthorizedError('Unauthorized user');
     await post.destroy();
+  },
+  getAllBlogPostsByTerm: async (term) => {
+    const posts = await BlogPost.findAll({
+      where: {
+        [Op.or]: [{ title: { [Op.like]: `%${term}%` } }, { content: { [Op.like]: `%${term}%` } }],
+      },
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+    return posts;
   },
 };
 
